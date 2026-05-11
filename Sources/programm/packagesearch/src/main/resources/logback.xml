@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2019-2025 IT-Alliance, LLC. All rights reserved,
+  ~ licensing is carried out on the basis of a license agreement
+  ~ with the copyright holder IT-Alliance, LLC.
+  ~ www.it-alnc.ru
+  -->
+
+<configuration debug="true">
+
+    <!-- Глобальный шаблон для консольных логов с возможностью переопределения из переменной окружения -->
+    <property name="CONSOLE_LOG_PATTERN"
+              value="${CONSOLE_LOG_PATTERN:-%d{yyyy-MM-dd HH:mm:ss.SSS} %5level [%thread] %logger{36} - %msg%n}"/>
+
+    <!-- Логирование в файл -->
+    <property name="LOG_FILE" value="${PACKAGESEARCH_LOGS_PATH:-./logs/packagesearchservice.log}"/>
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_FILE}</file>
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!--  Модульные параметры. Если переменная не определена или пуста, берутся значения по умолчанию: INFO и text  -->
+    <property name="MODULE_LOG_LEVEL" value="${PACKAGESEARCH_LOG_LEVEL:-DEBUG}"/>
+    <property name="MODULE_ROOT_LOG_LEVEL" value="${PACKAGESEARCH_ROOT_LOG_LEVEL:-INFO}"/>
+    <property name="MODULE_LOG_FORMAT" value="${PACKAGESEARCH_LOG_FORMAT:-text}"/>
+
+    <!-- Условная конфигурация логгера -->
+    <if condition='("${MODULE_LOG_FORMAT}" == "json")'>
+        <then>
+            <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+                <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+            </appender>
+        </then>
+        <else>
+            <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+                <encoder>
+                    <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+                </encoder>
+            </appender>
+        </else>
+    </if>
+
+    <!--  Настройка корневого логгера  -->
+    <root level="${MODULE_ROOT_LOG_LEVEL}">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+
+    <!--  Логгер для пакета ru.it_alnc.packagesearch -->
+    <logger name="ru.it_alnc" level="${MODULE_LOG_LEVEL}" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </logger>
+
+</configuration>

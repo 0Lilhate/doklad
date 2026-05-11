@@ -1,0 +1,43 @@
+spring:
+  datasource:
+    #    url: ${TERRASOFT_DB_URL:jdbc:sqlserver://192.168.0.7;databaseName=MORTGAGE}
+    #    username: ${TERRASOFT_DB_USER:sa}
+    #    password: ${TERRASOFT_DB_PASSWORD:sa}
+    #    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    #    url: ${PRODUCT_DB_URL:jdbc:oracle:thin:@//ds.it-alnc.ru:1522/pcat.it-alnc.ru}
+    url: ${PRODCAT_PRC_DB_URL:jdbc:postgresql://postgres.it-alnc.ru:5432/prodcat_alfa_dev}
+    username: ${PRODCAT_PRC_DB_USER:prc}
+    password: ${PRODCAT_PRC_DB_PASSWORD:prc}
+    driverClassName: ${PRODCAT_PRC_DB_DRIVER:org.postgresql.Driver}
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVERS:itaforms-node1.it-alnc.ru:9092,itaforms-node2.it-alnc.ru:9092}
+
+  jpa:
+    #    hibernate:
+    #      naming:
+    #        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        default_schema: ${DB_SCHEMA:PRC}
+        #        default_schema: ${DB_SCHEMA:PRCCAM}
+        #        jdbc:
+        #          time_zone: UTC
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+
+server:
+  port: 8190
+
+application:
+  mail:
+    mailUrl: ${MAIL_URL:mail.nic.ru:465}
+    user: ${MAIL_SERVER_USER:kk@it-alnc.ru}
+    from: ${MAIL_SERVER_FROM:${application.mail.user}}
+    password: ${MAIL_SERVER_PASSWORD:Dmb5_rD8}
+    adminMail: ${ADMIN_MAIL:a.kuznetsov@it-alnc.ru}
+
+logging:
+  file:
+    name: ${LOGS_PATH:/logs/prodcatservice.log}
+  level:
+    ru.it_alnc.packagesearch: ${LOG_LEVEL:info}

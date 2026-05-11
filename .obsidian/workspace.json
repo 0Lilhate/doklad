@@ -1,0 +1,254 @@
+{
+  "main": {
+    "id": "f25b621e3422b748",
+    "type": "split",
+    "children": [
+      {
+        "id": "54c3a643ea9f0f92",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "db85453db51ad8be",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "talk/AI-Agent Delivery Workflow.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "AI-Agent Delivery Workflow"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "6a5255f52f576a2e",
+    "type": "split",
+    "children": [
+      {
+        "id": "78242c2937113c9f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f25017845aaf5cfb",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Файловый менеджер"
+            }
+          },
+          {
+            "id": "fac978f12bdda349",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Поиск"
+            }
+          },
+          {
+            "id": "d5bad752aa5618c5",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Закладки"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 232.5
+  },
+  "right": {
+    "id": "58726210c68e8330",
+    "type": "split",
+    "children": [
+      {
+        "id": "db17e3ecbf85b892",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "8f6b934deae3ad33",
+            "type": "leaf",
+            "state": {
+              "type": "localgraph",
+              "state": {
+                "file": "talk/AI-Agent Delivery Workflow.md",
+                "options": {
+                  "collapse-filter": true,
+                  "search": "",
+                  "localJumps": 1,
+                  "localBacklinks": true,
+                  "localForelinks": true,
+                  "localInterlinks": false,
+                  "showTags": false,
+                  "showAttachments": false,
+                  "hideUnresolved": false,
+                  "collapse-color-groups": true,
+                  "colorGroups": [],
+                  "collapse-display": true,
+                  "showArrow": false,
+                  "textFadeMultiplier": 0,
+                  "nodeSizeMultiplier": 1,
+                  "lineSizeMultiplier": 1,
+                  "collapse-forces": true,
+                  "centerStrength": 0.518713248970312,
+                  "repelStrength": 10,
+                  "linkStrength": 1,
+                  "linkDistance": 250,
+                  "scale": 1.4019828977761057,
+                  "close": false
+                }
+              },
+              "icon": "lucide-git-fork",
+              "title": "Граф AI-Agent Delivery Workflow"
+            }
+          },
+          {
+            "id": "287c690618405ace",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "talk/AI-Agent Delivery Workflow.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Обратные ссылки для AI-Agent Delivery Workflow"
+            }
+          },
+          {
+            "id": "4fc6c5106cb91590",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "talk/AI-Agent Delivery Workflow.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Исходящие ссылки из AI-Agent Delivery Workflow"
+            }
+          },
+          {
+            "id": "052b5363486aacc1",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Теги"
+            }
+          },
+          {
+            "id": "900f269bb392f913",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "Все свойства"
+            }
+          },
+          {
+            "id": "d73cff724939bfe4",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "talk/AI-Agent Delivery Workflow.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Структура AI-Agent Delivery Workflow"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 753.5
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Меню быстрого перехода": false,
+      "graph:Граф": false,
+      "canvas:Создать новый холст": false,
+      "daily-notes:Сегодняшняя заметка": false,
+      "templates:Вставить шаблон": false,
+      "command-palette:Открыть палитру команд": false,
+      "bases:Создать новую базу": false,
+      "markdown-importer:Импорт Markdown-файлов": false
+    }
+  },
+  "active": "db85453db51ad8be",
+  "lastOpenFiles": [
+    "talk/Live Demo Script.md.tmp.4440.a7b358eec128",
+    "Sources/programm/packagesearch/manifest.yaml.tmpl",
+    "Sources/programm/packagesearch/values.yaml",
+    "Sources/programm/packagesearch/Dockerfile",
+    "Sources/programm/packagesearch/Dockeralfa",
+    "Sources/programm/packagesearch/README.md",
+    "Sources/programm/packagesearch/pom.xml",
+    "Sources/programm/packagesearch/target/generated-sources/annotations",
+    "Sources/programm/packagesearch/target/generated-sources",
+    "Sources/programm/packagesearch/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst",
+    "Sources/programm/packagesearch/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst",
+    "Sources/programm/packagesearch/target/maven-status/maven-compiler-plugin/compile/default-compile",
+    "talk/ai_agent_patterns_section_reworked.md",
+    "talk/Speaker Notes.md",
+    "talk/AI-Agent Delivery Workflow.md",
+    "talk/Real Stories.md",
+    "talk/Call To Action.md",
+    "Sources/Web/Developer Workflow.md",
+    "Sources/Web/AI Agents.md",
+    "Sources/Web/Analyst Workflow.md",
+    "talk/Cannot Show.md",
+    "talk/Templates.md",
+    "talk/Live Demo Script.md",
+    "talk/Fallback Demo Script.md",
+    "talk/Pre-Show Checklist.md",
+    "Sources/Web/ai_agent_delivery_talk_full.md",
+    "CLAUDE.md",
+    "source/ai_agent_delivery_talk_full.md"
+  ]
+}

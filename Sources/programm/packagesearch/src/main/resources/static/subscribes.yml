@@ -1,0 +1,989 @@
+openapi: 3.0.3
+info:
+  title: API для взаимодействия между ППК и ПК
+  version: '1.0.12'
+  description: |
+    Контракт описывает сообщения для взаимодействия Продуктового профиля клиента и Продуктового каталога
+    * Подбор Пакетов и Индивидуальных тарифов
+      посмотреть можно здесь: editor.swagger.io
+servers:
+  - url: 'https...'
+paths:
+  /prodCatSearch/package/search:
+    post:
+      summary: "Подбор доступных Пакетов"
+      description: "Подбор доступных Пакетов"
+      tags:
+        - "ProdCatSearch"
+      requestBody:
+        description: "Параметры запроса на подбор Пакетов"
+        required: true
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Search'
+      responses:
+        "200":
+          description: "OK"
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ServicePackageList'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /prodCatSearch/service/search:
+    post:
+      summary: "Подбор услуг из справочника по параметрам"
+      description: "Подбор услуг из справочника по параметрам"
+      tags:
+        - "ProdCatSearch"
+      requestBody:
+        description: "Параметры запроса на подбор услуг из справочника"
+        required: true
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/SearchService'
+      responses:
+        "200":
+          description: "OK"
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ServiceGuideList'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /prodCatSearch/tariff/get:
+    post:
+      summary: "Получение описания Тарифа по коду и параметрам"
+      description: "Получение описания Тарифа по коду и параметрам"
+      tags:
+        - "ProdCatSearch"
+      requestBody:
+        description: "Параметры запроса для поиска Тарифа"
+        required: true
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/GetTariff'
+      responses:
+        "200":
+          description: "OK"
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Tariff'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /prodCatSearch/individualTariff/search:
+    post:
+      summary: "Поиск индивидуальных тарифов по параметрам"
+      description: "Поиск индивидуальных тарифов по параметрам"
+      tags:
+        - "ProdCatSearch"
+      requestBody:
+        description: "Параметры запроса для поиска Индивидуального тарифа"
+        required: true
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/IndividualTariffSearch'
+      responses:
+        "200":
+          description: "OK"
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/IndividualTariffList'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Search:
+      description: "Параметры для указания code+value"
+      type: object
+      properties:
+        isFull:
+          description: "Признак Выгружать всю информацию"
+          type: boolean
+          default: false
+        isSkipPackageFilter:
+          description: "Не возвращать параметры фильтрации Пакета. Отвечает за возврат блоков servicePackageList/clientTypeList+segmentList+accountTypeList+branchList "
+          type: boolean
+          default: false
+        isSkipPackageParam:
+          description: "Не возвращать произвольные параметры Пакета. Отвечает за возврат блока servicePackageList/puParamList"
+          type: boolean
+          default: false
+        isSkipService:
+          description: "Не возвращать Тарифицированные услуги (за исключением собственной цены пакета)"
+          type: boolean
+          default: false
+        isSkipServiceParam:
+          description: "Не возвращать произвольные параметры Тарифицированной услуги. Отвечает за возврат блока servicePackageList/serviceGroupList/serviceLineList/paramList"
+          type: boolean
+          default: false
+        isSkipServiceCounter:
+          description: "Не возвращать счетчики Тарифицированной услуги. Отвечает за возврат блока servicePackageList/serviceGroupList/serviceLineList/counterList"
+          type: boolean
+          default: false
+        isSkipServiceTariffLine:
+          description: "Не возвращать строки тарифа Тарифицированной услуги. Отвечает за возврат блока servicePackageList/serviceGroupList/serviceLineList/tariffList/tariffLineList"
+          type: boolean
+          default: false
+        isCheckPackageCode:
+          description: "Принудительно проверить переданные пакеты на допустимость подключения. Принудительно проверять пакеты указанные в packageCode."
+          type: boolean
+          default: false
+        searchOnDate:
+          description: "На какую дату выполнить подбор и вернуть описание. Если не задано, то вернуть на текущее время."
+          type: string
+          format: date-time
+        packageCode:
+          description: "Перечень кодов запрошенных ПУ"
+          type: array
+          items:
+            type: string
+        individualTariffCode:
+          description: "Перечень кодов запрошенных Индивидуальных тарифов"
+          type: array
+          items:
+            type: string
+        clientPUCode:
+          description: "ПУ, к которому подключен клиент. Необходим для вычисления Цены Подписки, если цена настроена в ПУ."
+          type: string
+        isSkipDependentPUIfNoPUCode:
+          description: "Признак НЕ возвращать зависимые ПУ, если в запросе не передан ПУ клиента (т.е. если «clientPUCode»=null). Default false."
+          type: boolean
+        packageCategory:
+          description: "Перечень кодов запрошенных категорий ПУ"
+          type: array
+          items:
+            type: string
+        getIndividualTariff:
+          description: "Признак Вернуть Индивидуальные тарифы"
+          type: boolean
+        serviceGroup:
+          description: "Перечень кодов запрошенных Групп Услуг"
+          type: array
+          items:
+            type: string
+        service:
+          description: "Перечень кодов запрошенных Услуг"
+          type: array
+          items:
+            type: string
+        isMarketing:
+          description: "Признак Вернуть Маркетинговые"
+          type: boolean
+        isVerifyServiceCheckSet:
+          description: "Проверять «Условия оказания услуги» Тарифицированной услуги. Срабатывает только если задан один Код Услуги."
+          type: boolean
+          default: false
+        isVerifyServiceParamList:
+          description: "Проверять «Дополнительные параметры» Тарифицированной услуги. Срабатывает только если задан один Код Услуги."
+          type: boolean
+          default: false
+        isVerifyServiceTariff:
+          description: "Проверять «Тариф» Тарифицированной услуги. Срабатывает только если задан один Код Услуги."
+          type: boolean
+          default: false
+        onlySimpleTariffs:
+          description: "Возвращать только простые Индивидуальные Тарифы."
+          type: boolean
+          default: false
+        isForceServiceFilter:
+          description: "Принудительно фильтровать и возвращать только запрошенные Услуги и/или Группы услуг при заполненном PackageCode"
+          type: boolean
+          default: false
+        CLIENT:
+          description: "Параметры клиента"
+          type: array
+          items:
+            $ref: '#/components/schemas/ParamMap'
+        ACCOUNT:
+          description: "Параметры счета"
+          type: array
+          items:
+            $ref: '#/components/schemas/ParamMap'
+        CARD:
+          description: "Параметры карты"
+          type: array
+          items:
+            $ref: '#/components/schemas/ParamMap'
+        OPERATION:
+          description: "Параметры операции"
+          type: array
+          items:
+            $ref: '#/components/schemas/ParamMap'
+        PRODUCT:
+          description: "Параметры продукта"
+          type: array
+          items:
+            $ref: '#/components/schemas/ParamMap'
+    GetTariff:
+      description: "Параметры запроса для поиска Тарифа"
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          description: "Код Тарифа (Tariff.Code), описание которого нужно вернуть"
+          type: string
+        begDate:
+          description: "Дата начала действия редакции Тарифа (Tariff.BegDate), описание которой нужно вернуть. Если не задана, то возвращать действующую редакцию."
+          type: string
+          format: date-time
+        lineSortOrder:
+          description: "Строки редакции Тарифа (TariffLine.SortOrder), которые нужно вернуть. Если не заданы, то возвращать все строки редакции."
+          type: array
+          items:
+            type: integer
+    IndividualTariffSearch:
+      description: "Параметры запроса для поиска Индивидуального тарифа"
+      type: object
+      required:
+        - service
+      properties:
+        individualTariffCode:
+          description: "Перечень кодов Индивидуальных тарифов, описание которых необходимо вернуть. Если задан данны параметр, то все остальные параметры игнорируются."
+          type: array
+          items:
+            type: string
+        service:
+          description: "Перечень Кодов Услуг, по которым необходимо вернуть Индивидуальные тарифы"
+          type: array
+          items:
+            type: string
+        onlySimpleTariffs:
+          description: "Признак Вернуть только простые тарифы"
+          type: boolean
+          default: false
+    ParamMap:
+      type: object
+      properties:
+        code:
+          type: string
+        value:
+          type: string
+    ServicePackageList:
+      description: "Список Пакетов услуг"
+      type: object
+      properties:
+        servicePackageList:
+          description: "Список Пакетов услуг"
+          type: array
+          items:
+            $ref: '#/components/schemas/ServicePackage'
+        individualTariffList:
+          description: "Список Индивидуальных тарифов"
+          type: array
+          items:
+            $ref: '#/components/schemas/IndividualTariff'
+    ServicePackage:
+      description: "Пакет услуг: Тарифный план, Пакет услуг, Подписка"
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          description: "Код ПУ"
+          type: string
+        category:
+          description: "Категория ПУ. Допустимые значения: TARIFFPLAN – Тарифный план, SERVICEPACKAGE – Пакет услуг, SUBSCRIPTION – Подписка"
+          type: string
+        label:
+          description: "Наименование ПУ"
+          type: string
+        description:
+          description: "Описание ПУ"
+          type: string
+        begDate:
+          description: "Дата начала действия ПУ"
+          type: string
+          format: date-time
+        endDate:
+          description: "Дата окончания действия ПУ"
+          type: string
+          format: date-time
+        clientCommonType:
+          description: "Вид клиента, для которого предназначен ПУ"
+          type: string
+        priority:
+          description: "Приоритет ПУ"
+          type: number
+        parentCode:
+          description: "Код родительского ПУ"
+          type: string
+        excludePUGroup:
+          description: "Тип одностипных ПУ, которые не могут быть подключены одновременно, т.е. должны только заменяться одно на другое."
+          type: string
+        isIndividual:
+          description: "Признак индивидуального ПУ"
+          type: boolean
+        isMarketing:
+          description: "Признак маркетингового ПУ"
+          type: boolean
+        isIndependent:
+          description: "Признак независимого ПУ: усдуга с ценой ПУ настраивается в самом ПУ"
+          type: boolean
+        isLinked2Account:
+          description: "Признак Пакет с привязкой счетов: пакет привязан к паре Клиент+Счет, иначе - только к Клиенту"
+          type: boolean
+        isCloseOnAccount:
+          description: "Признак Автоматически отключать пакет при закрытии основного счета"
+          type: boolean
+        isMultyClient:
+          description: "Признак К пакету может быть присоединено несколько клиентов"
+          type: boolean
+        isMultyAccount:
+          description: "Признак К пакету может быть присоединено несколько счетов"
+          type: boolean
+        clientTypeList:
+          description: "Список типов клиентов, для которых предназначен данный ПУ"
+          type: array
+          items:
+            type: string
+        segmentList:
+          description: "Список сегментов клиентов, для которых предназначен данный ПУ"
+          type: array
+          items:
+            type: string
+        accountTypeList:
+          description: "Список типов счетов, для которых предназначен данный ПУ"
+          type: array
+          items:
+            type: string
+        branchList:
+          description: "Список отделений банка, для которых предназначен данный ПУ"
+          type: array
+          items:
+            type: string
+        puParamList:
+          description: "Список дополнительных параметров ПУ"
+          type: array
+          items:
+            $ref: '#/components/schemas/PUParam'
+        serviceGroupList:
+          description: "Список Групп услуг в ПУ"
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceGroup'
+    IndividualTariff:
+      description: "Индивидуальный тариф"
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          description: "Код ИТ"
+          type: string
+        label:
+          description: "Наименование ИТ"
+          type: string
+        serviceLine:
+          description: "Тарифицируемая Услуга в ИТ"
+          $ref: '#/components/schemas/ServiceLine'
+    IndividualTariffList:
+      description: "Список Индивидуальных тарифов"
+      type: array
+      items:
+        $ref: '#/components/schemas/IndividualTariff'
+    PUParam:
+      description: "Дополнительные параметры ПУ"
+      type: object
+      properties:
+        puGroupCode:
+          description: "Код группы параметров - группировка для UI"
+          type: string
+        puGroupLabel:
+          description: "Наименование группы параметров - группировка для UI"
+          type: string
+        order:
+          description: "Номер параметра"
+          type: number
+        code:
+          description: "Код параметра"
+          type: string
+        label:
+          description: "Наименование параметра"
+          type: string
+        type:
+          description: "Тип параметра"
+          type: string
+        guide:
+          description: "Код справочника ITA-Info"
+          type: string
+        vType:
+          description: "Тип значения параметра"
+          type: string
+        vTypeLabel:
+          description: "Наименование Типа значения параметра"
+          type: string
+        vBoolean:
+          description: "Значение для параметра типа ДА/НЕТ"
+          type: boolean
+        vString:
+          description: "Значение для параметра типа Строка"
+          type: string
+        vDate:
+          description: "Значение для параметра типа Дата"
+          type: string
+          format: date
+        vDateMin:
+          description: "Диапазон для параметра типа Дата: MIN"
+          type: string
+          format: date
+        vDateMax:
+          description: "Диапазон для параметра типа Дата: MAX"
+          type: string
+          format: date
+        vInt:
+          description: "Значение для параметра типа Целое число"
+          type: number
+        vIntMin:
+          description: "Диапазон для параметра типа Целое число: MIN"
+          type: number
+        vIntMax:
+          description: "Диапазон для параметра типа Целое число: MAX"
+          type: number
+        vFloat:
+          description: "Значение для параметра типа Десятичное число"
+          type: number
+        vFloatMin:
+          description: "Диапазон для параметра типа Десятичное число: MIN"
+          type: number
+        vFloatMax:
+          description: "Диапазон для параметра типа Десятичное число: MAX"
+          type: number
+        vCodePattern:
+          description: "Маска для кодов для параметра типа Справочник"
+          type: string
+        vCodeList:
+          description: "Список кодов для параметра типа Справочник"
+          type: string
+        vLabelList:
+          description: "Список наименований для кодов"
+          type: string
+    ServiceGroup:
+      description: "Группа услуг в ПУ"
+      type: object
+      properties:
+        order:
+          description: "Порядковый номер для последовательного отображения в UI"
+          type: number
+        code:
+          description: "Код Группs услуг в ПУ"
+          type: string
+        label:
+          description: "Наименование Группs услуг в ПУ"
+          type: string
+        serviceLineList:
+          description: "Список Тарифицируемых Услуг в ПУ"
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceLine'
+    ServiceLine:
+      description: "Тарифицированная услуга, например, Услуга для ПУ или Услуга для Индивидуального тарифа или настройка Шаблона"
+      type: object
+      properties:
+        order:
+          description: "Порядковый номер Услуги"
+          type: number
+        serviceGuide:
+          description: "Код Группы услуг из справочника"
+          type: string
+        service:
+          description: "Код Услуги из справочника"
+          type: string
+        servicelabel:
+          description: "Наименование Услуги из справочника"
+          type: string
+        isDeleted:
+          description: "Признак явного удаления записи по ключу"
+          type: boolean
+        begDate:
+          description: "Дата начала действия Услуги в ПУ"
+          type: string
+          format: date-time
+        endDate:
+          description: "Дата окончания действия Услуги в ПУ"
+          type: string
+          format: date-time
+        priority:
+          description: "Приоритет Услуги"
+          type: number
+        contextType:
+          description: "Тип привязки услуги, по какому объекту фактически ведется Услуга"
+          type: string
+        contextTypeLabel:
+          description: "Наименование Типа привязки услуги, по какому объекту фактически ведется Услуга"
+          type: string
+        serviceType:
+          description: "Тип услуги"
+          type: string
+        serviceTypeLabel:
+          description: "Наименование Типа услуги"
+          type: string
+        tariffType:
+          description: "Тип тирификации услуги"
+          type: string
+        tariffTypeLabel:
+          description: "Наименование Типа тирификации услуги"
+          type: string
+        limit4FreeQuantity:
+          description: "Бесплатный лимит по количеству операций по данной услуге"
+          type: number
+        limit4FreeSumAmount:
+          description: "Бесплатный лимит по сумме операций по данной услуге: Сумма лимита"
+          type: number
+        limit4FreeSumCurrency:
+          description: "Бесплатный лимит по сумме операций по данной услуге: Валюта лимита"
+          type: string
+        indexCode:
+          description: "Индекс Услуги в Пакете услуг"
+          type: string
+        ndsType:
+          description: "Тип НДС"
+          type: string
+        ndsTypeLabel:
+          description: "Наименование Типа НДС"
+          type: string
+        nsdRate:
+          description: "Размер НДС"
+          type: number
+        isNoEntry:
+          description: "Не создавать проводки по комиссии"
+          type: boolean
+        entryEventType:
+          description: "Режим начисления, учета и взимания комиссии"
+          type: string
+        entryEventTypeLabel:
+          description: "Наименование Режима начисления, учета и взимания комиссии"
+          type: string
+        rateType:
+          description: "Тип курса, использующийся для конвертации сумм"
+          type: string
+        rateTypeLabel:
+          description: "Наименование Типа курса, использующийся для конвертации сумм"
+          type: string
+        isSingleServiceInOper:
+          description: "Признак Единственной услуги по операции"
+          type: boolean
+        isAggregateMultyService:
+          description: "Объединять комиссии разных услуг по строкам одной операции, если по ней определено и вычислено несколько услуг"
+          type: boolean
+        isAggregateSummary:
+          description: "Группировать комиссии по документам в составе сводного"
+          type: boolean
+        aggregateSummaryNum:
+          description: "Номер группировки комиссии в составе сводного"
+          type: number
+        paramOperAmount:
+          description: "Поле Сумма операции"
+          type: string
+        paramOperCurrency:
+          description: "Поле Валюта операции"
+          type: string
+        isManualActivate:
+          description: "Периодическая услуга подключается клиентом"
+          type: boolean
+        enablePeriodCode:
+          description: "Коды допустимых периодов подключения периодической услуги. По справочнику Period: Примеры: 12D, 2W, 4M, 1Y. N - бесконечный период."
+          type: string
+        enablePeriodLabel:
+          description: "Наименования допустимых периодов подключения периодической услуги"
+          type: string
+        periodicPayType:
+          description: "Режим оплаты периодической услуги"
+          type: string
+        periodicPayTypeLabel:
+          description: "Наименование Режима оплаты периодической услуги"
+          type: string
+        periodicPartUsedPayType:
+          description: "Порядок оплаты периодической услуги за неполный период"
+          type: string
+        periodicPartUsedPayTypeLabel:
+          description: "Наименование Порядка оплаты периодической услуги за неполный период"
+          type: string
+        isPeriodicROO:
+          description: "Включение Режима Ожидания Оплаты"
+          type: boolean
+        periodicROOWaitPeriod:
+          description: "Cколько по времени повторять попытку пролонгации при РОО - код. По справочнику Period: Примеры: 12D, 2W, 4M, 1Y. N - бесконечный период."
+          type: string
+        periodicROOWaitPeriodLabel:
+          description: "Cколько по времени повторять попытку пролонгации при РОО - наименование"
+          type: string
+        gracePeriodCode:
+          description: "Код льготного (бесплатного) периода предоставления услуги. По справочнику Period: Примеры: 12D, 2W, 4M, 1Y. N - бесконечный период."
+          type: string
+        gracePeriodLabel:
+          description: "Наименование льготного (бесплатного) периода предоставления услуги"
+          type: string
+        isPeriodicCheckOperations:
+          description: "Проверять наличие совершенных операций при пролонгации или оплате периодической услуги"
+          type: boolean
+        isPeriodicCheckRest:
+          description: "Проверять доступный остаток при пролонгации периодической услуги"
+          type: boolean
+        pu4PriceService:
+          description: "Код ТП/ПУ/Подписки, для которой данная Тарифицированная услуга является Ценой"
+          type: string
+        paramList:
+          description: "Список дополнительных параметров Тарифицированной услуги"
+          type: array
+          items:
+            $ref: '#/components/schemas/Param'
+        counterList:
+          description: "Список счетчиков Тарифицированной услуги"
+          type: array
+          items:
+            $ref: '#/components/schemas/Counter'
+        tariffList:
+          description: "Список Тарифов - в будущем может быть несколько"
+          type: array
+          items:
+            $ref: '#/components/schemas/Tariff'
+        checkSetLineList:
+          description: "Правило проверки полей для вычисления услуги, проверки подключения периодической услуги и прочим проверкам объектов. В правило может входить несколько CheckSetLine, которые объединяют условия по нескольким полям с условием AND. Может быть несколько альтернативных CheckSetLine для правила, т.е. CheckSetLine между собой соединяются с условием OR."
+          type: array
+          items:
+            $ref: '#/components/schemas/CheckSetLine'
+    CheckSetLine:
+      description: "Одна строка правила проверки, которая соединяет в себе с оператором AND условия по нескольким полям."
+      type: object
+      properties:
+        begDate:
+          description: "Дата начала действия правила"
+          type: string
+          format: date-time
+        endDate:
+          description: "Дата окончания действия правила"
+          type: string
+          format: date-time
+        paramList:
+          description: "Список параметров правила"
+          type: array
+          items:
+            $ref: '#/components/schemas/Param'
+    Counter:
+      description: "Счетчик для Тарифицированной услуги"
+      type: object
+      properties:
+        code:
+          description: "АВТОГЕНЕРИРУЕМЫЙ Код счетчика - частичный синтезированный"
+          type: string
+        label:
+          description: "АВТОГЕНЕРИРУЕМОЕ Наименование счетчика"
+          type: string
+        type:
+          description: "Тип счетчика: M - Основной; S - Дочерний - расщепленный; A - Дополнительный;"
+          type: string
+        typeLabel:
+          description: "Наименование Типа счетчика: M - Основной; S - Дочерний - расщепленный; A - Дополнительный;"
+          type: string
+        parentCode:
+          description: "Код родительского счетчика. Заполняется только для счетчиков с типом type=S (Дочерний - расщепленный)."
+          type: string
+        currency:
+          description: "Валюта, в которой ведется счетчик"
+          type: string
+        period:
+          description: "Код периода. По аналогии со справочником Period: Примеры: 12D, 2W, 4M, 1Y. N - бесконечный период."
+          type: string
+        isCalendarBorder:
+          description: "0 - Период с даты подключения; 1 - Период по календарю;"
+          type: number
+        isUseQuantity:
+          description: "Вести Количество операций"
+          type: boolean
+        isUseSum:
+          description: "Вести Сумму операций"
+          type: boolean
+        isUseFee:
+          description: "Вести Сумму комиссий"
+          type: boolean
+        isUseNDS:
+          description: "Вести Сумму НДС"
+          type: boolean
+        contextType:
+          description: "Контекст (тип объекта), на котором ведется / к которому привязан счетчик"
+          type: string
+        contextTypeLabel:
+          description: "Наименование Контекста (типа объекта), на котором ведется / к которому привязан счетчик"
+          type: string
+        isCollectOnAccount:
+          description: "Дополнительно вести и группировать счетчик на Счете. Можно настроить только на счетчиках с ContextType=Объект."
+          type: boolean
+        isCollectOnPact:
+          description: "Дополнительно вести и группировать счетчик на Договоре-ПУ. Можно настроить только на счетчиках с ContextType=Объект,Счет."
+          type: boolean
+        isCollectOnClient:
+          description: "Дополнительно вести и группировать счетчик на Клиенте. Можно настроить только на счетчиках с ContextType=Объект,Счет,Договор-ПУ."
+          type: boolean
+        isCollectOnClientGroup:
+          description: "Дополнительно вести и группировать счетчик на Группе клиентов. Можно настроить только на счетчиках с ContextType=Объект,Счет,Договор-ПУ,Клиент."
+          type: boolean
+        archiveLength:
+          description: "Глубина хранения архивных периодов счетчика"
+          type: number
+        isGetFromIT:
+          description: "Брать значение счетчика при переходе с Индивидуального тарифа на услугу с данным счетчиком"
+          type: boolean
+        isGetFromS:
+          description: "Брать значение счетчика при переходе с Подписки на услугу с данным счетчиком"
+          type: boolean
+        isGetFromPS:
+          description: "Брать значение счетчика при переходе с Пакета услуг на услугу с данным счетчиком"
+          type: boolean
+        isGetFromTP:
+          description: "Брать значение счетчика при переходе с Тарифного плана на услугу с данным счетчиком"
+          type: boolean
+        isPutToIT:
+          description: "Передавать значение счетчика при переходе с услуги с данным счетчиком на Индивидуальный тариф"
+          type: boolean
+        isPutToS:
+          description: "Передавать значение счетчика при переходе с услуги с данным счетчиком на Подписку"
+          type: boolean
+        isPutToPS:
+          description: "Передавать значение счетчика при переходе с услуги с данным счетчиком на Пакет услуг"
+          type: boolean
+        isPutToTP:
+          description: "Передавать значение счетчика при переходе с услуги с данным счетчиком на Тарифный план"
+          type: boolean
+    Tariff:
+      description: "Тариф"
+      type: object
+      properties:
+        code:
+          description: "Код Тарифа"
+          type: string
+        label:
+          description: "Наименование Тарифа"
+          type: string
+        begDate:
+          description: "Дата начала действия Тарифа"
+          type: string
+          format: date-time
+        endDate:
+          description: "Дата окончания действия Тарифа"
+          type: string
+          format: date-time
+        tariffLineList:
+          description: "Список строк Тарифа"
+          type: array
+          items:
+            $ref: '#/components/schemas/TariffLine'
+    TariffLine:
+      description: "Строка Тарифа"
+      type: object
+      properties:
+        order:
+          description: "Порядковый номер строки"
+          type: number
+        currency:
+          description: "Валюта, в которой указываются параметры amountFix, amountMIN, amountMAX"
+          type: string
+        amountFix:
+          description: "Фиксированная сумма комиссии"
+          type: number
+        rate:
+          description: "% комиссии"
+          type: number
+        amountMIN:
+          description: "Минимальная сумма комиссии"
+          type: number
+        amountMAX:
+          description: "Максимальная сумма комиссии"
+          type: number
+        paramList:
+          description: "Список параметров и их значений для строки Тарифа"
+          type: array
+          items:
+            allOf:
+              - type: object
+                properties:
+                  tariffPart:
+                    description: "Группа в Тарифе, к которой относится параметр: 1 - Условия применения; 2 - Параметры тарификации; 3 - Один параметр типа FLOAT влияющий на Цену; 4 - Параметры определяемые/вычисляемые вместе с Ценой - не являются условием, а являются результатом вычисления строки Тарифа;"
+                    type: number
+              - $ref: '#/components/schemas/Param'
+    Param:
+      description: "Тип для параметра"
+      type: object
+      properties:
+        order:
+          description: "Номер параметра"
+          type: number
+        code:
+          description: "Код параметра"
+          type: string
+        label:
+          description: "Наименование параметра"
+          type: string
+        type:
+          description: "Тип параметра"
+          type: string
+        guide:
+          description: "Код справочника ITA-Info"
+          type: string
+        vType:
+          description: "Тип значения параметра"
+          type: string
+        vTypeLabel:
+          description: "Наименование Типа значения параметра"
+          type: string
+        vBoolean:
+          description: "Значение для параметра типа ДА/НЕТ"
+          type: boolean
+        vString:
+          description: "Значение для параметра типа Строка"
+          type: string
+        vDate:
+          description: "Значение для параметра типа Дата"
+          type: string
+          format: date
+        vDateMin:
+          description: "Диапазон для параметра типа Дата: MIN"
+          type: string
+          format: date
+        vDateMax:
+          description: "Диапазон для параметра типа Дата: MAX"
+          type: string
+          format: date
+        vInt:
+          description: "Значение для параметра типа Целое число"
+          type: number
+        vIntMin:
+          description: "Диапазон для параметра типа Целое число: MIN"
+          type: number
+        vIntMax:
+          description: "Диапазон для параметра типа Целое число: MAX"
+          type: number
+        vFloat:
+          description: "Значение для параметра типа Десятичное число"
+          type: number
+        vFloatMin:
+          description: "Диапазон для параметра типа Десятичное число: MIN"
+          type: number
+        vFloatMax:
+          description: "Диапазон для параметра типа Десятичное число: MAX"
+          type: number
+        vCodePattern:
+          description: "Маска для кодов для параметра типа Справочник"
+          type: string
+        vCodeList:
+          description: "Список кодов для параметра типа Справочник"
+          type: string
+        vLabelList:
+          description: "Список наименований для кодов"
+          type: string
+    SearchService:
+      description: "Запрос по подбору услуг из справочника"
+      type: object
+      required:
+        - clientCommonTypeList
+      properties:
+        clientCommonTypeList:
+          description: "Список кодов Вид клиента"
+          type: array
+          items:
+            type: string
+        serviceGuideList:
+          description: "Список кодов Группа услуг"
+          type: array
+          items:
+            type: string
+        serviceTypeList:
+          description: "Список кодов Тип услуги"
+          type: array
+          items:
+            type: string
+        serviceGuideItemList:
+          description: "Список кодов Услуг"
+          type: array
+          items:
+            type: string
+    ServiceGuideList:
+      description: "Список Групп услуг из справочника"
+      type: object
+      properties:
+        servicePackageList:
+          description: "Список Групп услуг из справочника"
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceGuide'
+    ServiceGuide:
+      description: "Группа услуг из справочника"
+      type: object
+      properties:
+        clientCommonType:
+          description: "Вид клиента"
+          type: string
+        code:
+          description: "Код"
+          type: string
+        label:
+          description: "Краткое наименование"
+          type: string
+        serviceGuideItemList:
+          description: "Список Услуг из справочника входящих в группу"
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceGuideItem'
+    ServiceGuideItem:
+      description: "Услуга из справочника"
+      type: object
+      properties:
+        clientCommonType:
+          description: "Вид клиента"
+          type: string
+        code:
+          description: "Код"
+          type: string
+        label:
+          description: "Краткое наименование"
+          type: string
+        indexСode:
+          description: "Код индекса"
+          type: string
+        serviceType:
+          description: "Тип"
+          type: string
+        begDate:
+          description: "Дата начала периода, когда можно добавлять услугу"
+          type: string
+          format: date-time
+        endDate:
+          description: "Дата окончания периода, когда можно добавлять услугу"
+          type: string
+          format: date-time
+        sortOrder:
+          description: "Порядковый номер сортировки"
+          type: integer
+    Error:
+      description: "описание сообщения об ошибке"
+      type: object
+      properties:
+        code:
+          description: "код ошибки"
+          type: string
+        message:
+          description: "сообщение об ошибке"
+          type: string

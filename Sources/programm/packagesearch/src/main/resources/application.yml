@@ -1,0 +1,121 @@
+spring:
+  application:
+    name: fprodsearch
+  datasource:
+    #    url: ${TERRASOFT_DB_URL:jdbc:sqlserver://192.168.0.7;databaseName=MORTGAGE}
+    #    username: ${TERRASOFT_DB_USER:sa}
+    #    password: ${TERRASOFT_DB_PASSWORD:sa}
+    #    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    #    url: ${PRODUCT_DB_URL:jdbc:oracle:thin:@//ds.it-alnc.ru:1522/pcat.it-alnc.ru}
+    url: ${PRODCAT_PRC_DB_URL:jdbc:postgresql://postgres.it-alnc.ru:5432/prodcat_alfa_dev}
+    username: ${PRODCAT_PRC_DB_USER:prc}
+    password: ${PRODCAT_PRC_DB_PASSWORD:si3GqDbUFRDeC}
+    driverClassName: ${PRODCAT_PRC_DB_DRIVER:org.postgresql.Driver}
+    hikari:
+      schema: ${PRODCAT_PRC_DB_SCHEMA:prc}
+      maximum-pool-size: ${PACKAGESEARCH_MAX_POOL_SIZE:5}
+      minimum-idle: ${PACKAGESEARCH_MIN_IDLE:2}
+      idle-timeout: ${PACKAGESEARCH_IDLE_TIMEOUT:30000}
+
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVERS:kfk-alfa-dev1.it-alnc.ru:9092,kfk-alfa-dev2.it-alnc.ru:9092,kfk-alfa-dev3.it-alnc.ru:9092}
+
+  jpa:
+    #    hibernate:
+    #      naming:
+    #        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        default_schema: ${PRODCAT_PRC_DB_SCHEMA:PRC}
+#        default_schema: ${DB_SCHEMA:PRCCAM}
+#        jdbc:
+#          time_zone: UTC
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show_sql: false
+#        use_sql_comments: true
+#        format_sql: true
+    open-in-view: true
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+
+server:
+  servlet:
+    context-path: /packagesearch
+  port: 8190
+  tomcat:
+    threads:
+      max: 50
+
+it-alnc:
+  hdbk-service-url: ${ITA_INFO:http://192.168.0.18:8071}
+  orgstruct-service-url: ${ITA_INFO:http://192.168.0.18:8071}
+  external-url: ${ITA_FRONT:https://alfa-test.it-alnc.ru}
+
+application:
+#  mail:
+#    mailUrl: ${MAIL_URL:mail.nic.ru:465}
+#    user: ${MAIL_SERVER_USER:kk@it-alnc.ru}
+#    from: ${MAIL_SERVER_FROM:${application.mail.user}}
+#    password: ${MAIL_SERVER_PASSWORD:Dmb5_rD8}
+#    adminMail: ${ADMIN_MAIL:a.kuznetsov@it-alnc.ru}
+  kafka:
+    subscribe-topic: ${SUBSCRIBES_TOPIC:subscribes}
+    replication-factor: ${KAFKA_REPLICATION_FACTOR:1}
+
+logging:
+  file:
+    name: ${PACKAGESEARCH_LOGS_PATH:/logs/packagesearchservice.log}
+  level:
+    #root: ${PACKAGESEARCH_ROOT_LOG_LEVEL:INFO}
+    #ru.it_alnc.packagesearch: ${PACKAGESEARCH_LOG_LEVEL:INFO}
+    #supress kafka excess beard logs
+    org.apache.kafka.clients.admin.AdminClientConfig: ${KAFKA_CLIENTS_LOG_LEVEL:WARN}
+    org.apache.kafka.clients.producer.ProducerConfig: ${KAFKA_CLIENTS_LOG_LEVEL:WARN}
+    org.apache.kafka: ${KAFKA_CLIENTS_NC_LOG_LEVEL:ERROR}
+    org.apache.kafka.clients.NetworkClient: ${KAFKA_CLIENTS_NC_LOG_LEVEL:ERROR}
+    #org.hibernate.orm.jdbc.bind: trace
+    #org.hibernate.type: trace
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, info, prometheus
+  health:
+    elasticsearch:
+      enabled: false
+
+healthcheck:
+  request:
+    timeout:
+      ms: ${HC_KAFKA_REQUEST_TIMEOUT:5000}
+  connections:
+    max:
+      idle:
+        ms: ${HC_KAFKA_CONNECTIONS_MAX_IDLE:10000}
+  dbsoft: ${HEALTHCHECK_DBSOFT:false}
+
+service:
+  audit-enabled: false
+  health:
+    pool-check:
+      enabled: ${ITA_API_HIKARI_HEALTHCHECK_ENABLED:true}
+      retry-interval: ${ITA_API_HIKARI_HEALTHCHECK_INTERVAL:PT5S}
+  pod-name: ${HOSTNAME:packagesearchdefault}
+
+kafka:
+  audit:
+    bootstrap-servers: ${KAFKA_SERVERS_EL:0.0.0.0:9092}
+    ssl:
+      trust-store-location: ${KAFKA_EL_W_SSL_TRUSTSTORE_LOCATION:null}
+      trust-store-password: ${KAFKA_EL_W_SSL_TRUSTSTORE_PASSWORD:changeit}
+    security:
+      protocol: ${KAFKA_EL_SECURITY_PROTOCOL:PLAINTEXT}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      acks: ${KAFKA_EL_ACKS:1}
+      properties:
+        sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="${KAFKA_EL_W_USER:admin}" password="${KAFKA_EL_W_PASSWORD:admin-secret}";
+      compression-type: ${KAFKA_EL_COMPRESSION_TYPE:gzip}
+      topic: ${ELASTIC_AUDIT_TOPIC:elastic-audit}

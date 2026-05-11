@@ -1,0 +1,7 @@
+FROM openjdk:11
+ADD work/ /
+WORKDIR /app
+COPY target/fprodsearch-0.0.1-SNAPSHOT.jar .
+
+CMD java ${JAVA_OPTS} -jar /app/fprodsearch-0.0.1-SNAPSHOT.jar
+

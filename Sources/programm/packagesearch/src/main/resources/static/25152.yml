@@ -1,0 +1,250 @@
+openapi: '3.0.2'
+info:
+  title: Передача каталога ITA Forms - OnBank.
+  version: '1.0.0'
+paths:
+  /api/getMortageCatalog:
+    get:
+      summary: Получение данных для формирования страницы ипотеки на сайте
+
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CatalogInfo"
+
+components:
+  schemas:
+    CatalogInfo:
+      description: Возвращаемый объект
+      type: object
+      properties:
+        references:
+          $ref: "#/components/schemas/References"
+        catalogResponse:
+          $ref: "#/components/schemas/CatalogResponse"
+
+    References:
+      description: Справочник, на основание которого заполненяются тарифы
+      type: object
+      required:
+        - referenceCustomerSegments
+        - referenceGoals
+        - referenceRealEstates
+        - referenceConditions
+        - referenceDiscounts
+      properties:
+        referenceCustomerSegments:
+          description: Каталог клиентских сегментов
+          type: array
+          example: [{itemName: Сотрудник, itemId: 1}]
+          items:
+            $ref: "#/components/schemas/ReferenceItems"
+        referenceGoals:
+          description: Каталог целей
+          type: array
+          example: [{itemName: Рефинансирование, itemId: 3}]
+          items:
+            $ref: "#/components/schemas/ReferenceItems"
+        referenceRealEstates:
+          description: Каталог типов объекта залога (типов недвижимости)
+          type: array
+          example: [{itemName: Квартира, itemId: 1}]
+          items:
+            $ref: "#/components/schemas/ReferenceItems"
+        referenceConditions:
+          description: Каталог условий выдачи кредита
+          type: array
+          example: [{itemName: По двум документам, itemId: 2}]
+          items:
+            $ref: "#/components/schemas/ReferenceItems"
+        referenceDiscounts:
+          description: Каталог целей
+          type: array
+          example: [{itemName: Страхование титула, itemId: 2}]
+          items:
+            $ref: "#/components/schemas/ReferenceItems"
+
+    ReferenceItems:
+      description: Значение параметра тарифа (за исключением скидок и надбавок)
+      type: object
+      required:
+        - itemName
+        - itemId
+      properties:
+        itemName:
+          description: Название значения
+          type: string
+        itemId:
+          description: Id значения
+          type: string
+
+
+    CatalogResponse:
+      description: Массив ипотечных предложений для отображения на сайте
+      type: array
+      items:
+        $ref: "#/components/schemas/MortagePrograms"
+
+    MortagePrograms:
+      description: Ипотечное предложение для отображения на сайте
+      type: object
+      required:
+        - programCatalogCode
+        - programName
+        - programTariffs
+      properties:
+        programCatalogCode:
+          description: Уникальный код названия предложения на сайте
+          type: string
+        programName:
+          description: Наименование предложения для сайта
+          type: string
+        programOrder:
+          description: порядковый номер размещения программы на сайте
+          type: integer
+          minimum: 1
+        programIsSpecialOffer:
+          description: Признак специального предложения
+          type: boolean
+        programTariffs:
+          description: Набор ставок, суммы и срока кредитования для разных комбинаций параметров предложения
+          type: array
+          items:
+            $ref: "#/components/schemas/ProgramTariffs"
+
+    ProgramTariffs:
+      description: Набор ставок, суммы и срока кредитования для разных комбинаций параметров предложения
+      type: object
+      required:
+        - tariffCustomerSegments
+        - tariffGoals
+        - tariffRealEstates
+        - tariffConditions
+        - tariffDiscounts
+        - tariffRates
+        - tariffLoanTermAndAmounts
+      properties:
+        tariffCustomerSegments:
+          description: Id сегментов из каталога referenceCustomerSegments
+          type: array
+          items:
+            type: string
+        tariffGoals:
+          description: Id целей из каталога referenceGoal
+          type: array
+          items:
+            type: string
+        tariffRealEstates:
+          description: Id типа недвижимости из каталога referenceRealEstate
+          type: array
+          items:
+            type: string
+        tariffConditions:
+          description: Id условия из каталога referenceConditions
+          type: array
+          items:
+            type: string
+        tariffDiscounts:
+          description: Скидки/надбавки из каталога referenceDiscounts + значение
+          type: array
+          items:
+            $ref: "#/components/schemas/DiscountItems"
+        tariffRates:
+          description: Ставки для тарифа
+          $ref: "#/components/schemas/Rates"
+        tariffLoanTermAndAmounts:
+          description: Сроки и суммы кредитования для тарифа соотнесенные с регионами
+          $ref: "#/components/schemas/LoanTermsAndAmounts"
+
+    DiscountItems:
+      type: object
+      required:
+        - discountId
+        - discountValue
+      properties:
+        discountId:
+          description: ID скидки/надбавки из каталога referenceDiscounts
+          type: string
+        discountValue:
+          description: Величина скидки/надбавки для данного тарифа в долях единицы
+          type: number
+          minimum: -1
+          maximum: 1
+          example: 0.02
+
+    Rates:
+      type: array
+      items:
+        $ref: "#/components/schemas/RatesItems"
+
+    RatesItems:
+      type: object
+      required:
+        - minKZ
+        - maxKZ
+        - rate
+      properties:
+        minKZ:
+          description: Минимальное значение КЗ, указывается в долях единицы, должно быть меньше maxKZ
+          type: number
+          minimum: 0
+          maximum: 1
+          example: 0.1
+        maxKZ:
+          description: Минимальное значение КЗ, указывается в долях единицы, должно быть больше minKZ
+          type: number
+          minimum: 0
+          maximum: 1
+          example: 0.6
+        rate:
+          description: Ставка кредитования, указывается в долях
+          type: number
+          minimum: 0
+          maximum: 1
+          example: 0.09
+
+    LoanTermsAndAmounts:
+      type: array
+      items:
+        $ref: "#/components/schemas/LoanTermsAndAmountsItems"
+
+    LoanTermsAndAmountsItems:
+      type: object
+      required:
+        - minLoanAmount
+        - maxLoanAmount
+        - minLoanTerm
+        - maxLoanTerm
+      properties:
+        minLoanAmount:
+          description: Минимальная сумма кредитования, должна быть меньше maxLoanAmount
+          type: number
+          minimum: 0
+          example: 400000
+        maxLoanAmount:
+          description: Минимальная сумма кредитования, должна быть больше minLoanAmount
+          type: number
+          minimum: 0
+          example: 15000000
+        minLoanTerm:
+          description: Минимальный срок кредитования, указывается в месяцах, должен быть меньше maxLoanTerm
+          type: number
+          minimum: 0
+          example: 36
+        maxLoanTerm:
+          description: Максильный срок кредитования, указывается в месяцах, должен быть больше minLoanTerm
+          type: number
+          minimum: 0
+          example: 240
+        regions:
+          description: Регионы, для которых валидны значения maxLoanAmount, minLoanAmount, maxLoanTerm, minLoanTerm. Множества регионов не должны пересекаться для разных наборов сроков и сумм внтури одного тарифа
+          type: array
+          items:
+            $ref: "#/components/schemas/Regions"
+
+    Regions:
+      description: Массив кодов регионов (коды КЛАДР)
+      type: string

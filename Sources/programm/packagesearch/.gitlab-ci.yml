@@ -1,0 +1,13 @@
+include:
+  - project: 'alfa-mvp/devops/ci'
+    file: '/${CI_PROJECT_NAME}/.gitlab-ci.yml'
+generate_sbom:
+  stage: build
+  tags:
+    - alfa-mvp-k8s
+  script:
+    - mvn clean validate -Pcyclonedx-maven
+    - curl -v -u ${NEXUS_LOGIN_ALFA}:${NEXUS_PASS_ALFA} --upload-file target/classes/META-INF/sbom/${APP}-SBOM.xml ${NEXUS_HOST_API}/repository/files/ita-forms/${CI_COMMIT_REF_NAME}/${APP}/
+    - curl -v -u ${NEXUS_LOGIN_ALFA}:${NEXUS_PASS_ALFA} --upload-file target/classes/META-INF/sbom/${APP}-SBOM.json ${NEXUS_HOST_API}/repository/files/ita-forms/${CI_COMMIT_REF_NAME}/${APP}/
+  only:
+    - tags

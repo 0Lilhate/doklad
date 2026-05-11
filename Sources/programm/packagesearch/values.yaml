@@ -1,0 +1,126 @@
+---
+release:
+  version: 1.0.0
+  group: ita-forms
+
+# -- Кол-во реплик
+replicaCount: 1
+
+# -- Список портов, которые будут добавлены в service
+ports:
+  - name: http
+    port: 8190
+    protocol: TCP
+
+# -- Кол-во replicaSet для хранения
+revisionHistoryLimit: 1
+# -- Сколько секунд ждать healthcheck
+progressDeadlineSeconds: 400
+
+stdin: true
+tty: true
+
+# -- Логика создания объектов ингресс
+ingress:
+  # -- Создавать ли объект ингресс для сервиса?
+  enabled: false
+  # -- Список хостов, по которым будет доступен сервис
+  hosts: []
+  # -- Список location, по которым будет доступен сервис
+  paths: []
+  servicePort: http
+  annotations: {}
+  # -- Настройки tls
+  tls:
+    enabled: true
+    # -- Для каких хостов включать tls
+    hosts: []
+    # -- Из какого секрета брать сертификаты
+    secretName: ""
+
+# -- readinessProbe
+readinessProbe:
+  httpGet:
+    path: /packagesearch/health?level=2
+    port: http
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  failureThreshold: 2
+
+# -- livenessProbe
+livenessProbe:
+  httpGet:
+    path: /packagesearch/health?level=1
+    port: http
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  failureThreshold: 2
+
+# -- Реквесты и лимиты
+resources:
+  requests:
+    cpu: 1
+    memory: 1Gi
+  limits:
+    memory: 3Gi
+
+# -- Переменные окружения
+env: {JAVA_OPTS: "-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -XX:+CrashOnOutOfMemoryError"}
+extraEnvVarsCM: prodsearch-config
+
+serviceAccount: true
+createServiceMonitor: true
+
+# -- Настройки мониторинга сервиса через prometheus
+serviceMonitor:
+  # -- Включать ли скраппинг метрик
+  enabled: false
+  labels: {}
+  # -- Интервал скраппинга
+  interval: 60s
+  # -- Таймаут скраппинга
+  scrapeTimeout: 10s
+  # -- Протокол скраппинга
+  scheme: http
+  # -- Порт, на котором доступны метрики
+  port: http
+  # -- Путь, по  которому доступны метрики
+  path: /prodsearch/actuator/metrics
+  # -- Настройки tls
+  tlsConfig: 
+    insecureSkipVerify: true
+
+
+persistence:
+  # -- Сохранять ли состояние сервиса?
+  enabled: false
+  # -- Имя storageClass
+  storageClass: csi-cephfs-sc
+  # -- Режим доступа
+  accessMode: ReadWriteMany
+  # -- Размер PVC
+  size: 1Gi
+  # -- Создание volume в deployment, если persistence.enabled: true, обязательное.
+  mountPath: "/boclasses"
+  # -- Использовать существующий pvc
+  existingClaim: "ita-prc-classes"
+
+  persistenceVolume:
+    # -- Создавать или нет pv
+    create: false
+    # -- Использовать существующий PV если persistenceVolume.create: false
+    existingVolume: ""
+    # -- Параметры монтирования PV
+    mountOptions: []
+    # -- Тип PV hostPath
+    type: "hostPath"
+    # -- Параметры hostPath для type hostPath
+    hostPath:
+      path: ""
+      type: ""
+    # -- Параметры Reclaim
+    persistentVolumeReclaimPolicy: Delete
+
+# -- Секрет с учеткой для доступа к docker-registry
+imagePullSecrets:
+  - name: nexus-registry

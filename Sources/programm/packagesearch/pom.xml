@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>ru.it_alnc.ita_forms.core</groupId>
+        <artifactId>ita-lib-bom</artifactId>
+        <version>0.1.43-SNAPSHOT</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>ru.it_alnc</groupId>
+    <artifactId>fprodsearch</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>packagesearch</name>
+    <description>Flat product search</description>
+
+    <properties>
+        <java.version>17</java.version>
+        <swagger.version>2.4.0</swagger.version>
+        <http-client.version>4.5.14</http-client.version>
+        <cyclonedx.version>2.7.9</cyclonedx.version>
+        <apache-collections.version>4.4</apache-collections.version>
+    </properties>
+
+    <dependencies>
+        <!--ita dependencies-->
+        <dependency>
+            <groupId>ru.it_alnc.ita_forms.core</groupId>
+            <artifactId>ita-lib-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ru.it_alnc.ita_forms.core</groupId>
+            <artifactId>ita-lib-audit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ru.it_alnc.ita_forms.core</groupId>
+            <artifactId>ita-lib-security</artifactId>
+        </dependency>
+
+        <!--spring dependencies-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+
+        <!--utils dependencies-->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${http-client.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>${apache-collections.version}</version>
+        </dependency>
+
+        <!--DB dependencies-->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+
+        <!--test dependencies-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!--LOGGING-->
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.janino</groupId>
+            <artifactId>janino</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+    <profiles>
+        <profile>
+            <id>cyclonedx-maven</id>
+            <build>
+                <plugins>
+                    <!--     SBOM generation       -->
+                    <plugin>
+                        <groupId>org.cyclonedx</groupId>
+                        <artifactId>cyclonedx-maven-plugin</artifactId>
+                        <version>${cyclonedx.version}</version>
+                        <executions>
+                            <execution>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>makeAggregateBom</goal>
+                                </goals>
+                                <configuration>
+                                    <projectType>application</projectType>
+                                    <schemaVersion>1.4</schemaVersion>
+                                    <includeBomSerialNumber>true</includeBomSerialNumber>
+                                    <includeCompileScope>true</includeCompileScope>
+                                    <includeProvidedScope>true</includeProvidedScope>
+                                    <includeRuntimeScope>true</includeRuntimeScope>
+                                    <includeSystemScope>true</includeSystemScope>
+                                    <includeTestScope>false</includeTestScope>
+                                    <includeLicenseText>false</includeLicenseText>
+                                    <outputFormat>all</outputFormat>
+                                    <!--suppress UnresolvedMavenProperty -->
+                                    <outputName>${CI_PROJECT_NAME}-SBOM</outputName>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
