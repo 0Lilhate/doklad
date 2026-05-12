@@ -17,13 +17,25 @@ If a rule here conflicts with a skill's internal documentation, **this file wins
 
 ---
 
-## Current state (2026-05-09)
+## Current state (2026-05-12)
 
-Vault is in **bootstrap**. The only content note on disk is `source/ai_agent_delivery_talk_full.md`. The directory structure described below — `work/`, `org/`, `perf/`, `brain/`, `Sources/`, `templates/`, `bases/`, `journal/`, `thinking/`, `Inbox/` — is the **target layout**; most folders have not been created yet. `vault-manifest.json` and `Home.md` are referenced by rules but not yet present.
+This is a **talk-preparation vault**, not a generic obsidian-mind vault yet. Primary deliverable: a 60-minute Russian-language talk *«AI-agent как усилитель delivery-процесса: от требования до MR»* with live demo on **opencode** against a real Java microservice.
 
-Treat structural references in this file and in `.claude/rules/` as **intent**, not **fact**. Verify a path with `Glob` or `Read` before assuming it exists. When asked to create a note in a folder that does not yet exist, create the folder, but flag it to the user — folder choices are policy decisions, not housekeeping.
+**On disk right now:**
+
+- `talk/` — 10 working talk artifacts (~3500 lines, `type: output`). Master script: `talk/AI-Agent Delivery Workflow.md`. Demo script: `talk/Live Demo Script.md`. Other operational docs: `Speaker Notes.md`, `Pre-Show Checklist.md`, `Fallback Demo Script.md`, `Real Stories.md`, `Templates.md`, `Cannot Show.md`, `Call To Action.md`, `ai_agent_patterns_section_reworked.md`.
+- `Sources/Web/` — 4 research notes feeding the talk: `AI Agents.md`, `Analyst Workflow.md`, `Developer Workflow.md`, plus the older full draft `ai_agent_delivery_talk_full.md`.
+- `Sources/programm/packagesearch/` — **a live Java/Spring service** used as the demo target. See "Live demo target" section below. Treat this directory as a real codebase, not vault material.
+- `.claude/` — agents, slash-commands (`/om-*`), rules, scripts, hooks. Configured.
+- `.idea/`, `.obsidian/` — IDE/editor metadata.
+
+**Not yet on disk (target layout per obsidian-mind, do not assume present):** `work/`, `org/`, `perf/`, `brain/`, `templates/`, `bases/`, `journal/`, `thinking/`, `Inbox/`, `Home.md`, `vault-manifest.json`. Several `.claude/` references are also aspirational: `.claude/docs/`, the file `senior-vectorized-flute.md` referenced by `Live Demo Script.md`, the `fallback/` folder referenced by `Fallback Demo Script.md`, and `demo/ticket.md` referenced by step 1 of the demo. Treat structural references in this file and in `.claude/rules/` as **intent**; verify with `Glob`/`Read` before assuming.
+
+When asked to create a note in a folder that does not yet exist, create the folder but flag it to the user — folder choices are policy decisions, not housekeeping.
 
 `.mcp.json` provides: `github`, `context7`, `exa`, `memory`, `playwright`, `sequential-thinking`. Reach for them before reinventing.
+
+**Language:** vault content (`talk/`, `Sources/`) is **Russian**; `.claude/` config, rules, scripts, and code in `packagesearch/` are **English**. Do not "normalize for consistency" across this boundary — it is intentional.
 
 ---
 
@@ -38,6 +50,35 @@ This vault is an AI-assisted knowledge base built around the [obsidian-mind](htt
 - maintaining vault hygiene over time.
 
 Claude Code does not own the vault. The user owns the vault. Claude Code proposes, audits, and executes — but never restructures unilaterally.
+
+**Right now, the dominant working context is the talk** — not generic vault hygiene. When the user asks an ambiguous question, default to "is this about the talk, the demo service, or the obsidian-mind infrastructure?" before reaching for a vault-wide tool.
+
+---
+
+## Live demo target — `Sources/programm/packagesearch/`
+
+This subdirectory is a **real Java/Spring Boot 3 microservice** (Java 17, Maven, parent `ru.it_alnc.ita_forms.core:ita-lib-bom`, artifactId `fprodsearch`). It is the demo subject for the talk's 20-minute live segment. The 12-step demo adds derived field `Integer daysRemaining` to `POST /FL/gracePeriod` response (`GracePeriodResponseDto`).
+
+**Treat this directory as a codebase, not vault notes:**
+
+- Do not apply `note-normalizer`, `defuddle`, `obsidian-*` skills, or frontmatter rules to `.java`, `.yaml`, `Dockerfile`, `pom.xml`.
+- Do not add YAML frontmatter to `README.md` here.
+- `qmd` indexing is for vault notes; do not include Java sources unless the user explicitly asks.
+
+**Common commands (run from `Sources/programm/packagesearch/`):**
+
+| Command | Purpose |
+|---|---|
+| `mvn clean install` | Full build + tests |
+| `mvn test` | Tests only |
+| `mvn -Dtest=GracePeriodServiceTest test` | **Single test (used live on stage in demo step 10)** |
+| `mvn -Dtest=ClassName#methodName test` | Single test method |
+| `mvn dependency:go-offline` | Warm `.m2` cache (run as part of pre-show T-25) |
+| `bash devops/build_app.sh` | Full docker build per project convention |
+
+**Runtime env (from local `README.md`):** the service connects to Postgres at `postgres.it-alnc.ru:5432` (schema `PRC`), Kafka `itaforms-node1/2.it-alnc.ru:9092`, and `ita-info` at `192.168.0.18:8071`. **Before any live `mvn test` on stage:** verify the target test class is unit-only (no real DB/Kafka calls). If integration tests are present, isolate them behind a profile.
+
+**AGENTS.md:** the talk teaches the AGENTS.md pattern; the demo repo should have one. If `Sources/programm/packagesearch/AGENTS.md` is missing when the user prepares for the talk, surface that gap.
 
 ---
 
@@ -130,6 +171,9 @@ Subagents live in `.claude/agents/`. Pick the agent whose description matches th
 | Logging a Claude Code / dev / research session | `session-documenter` |
 | Searching the open web, docs, GitHub, papers | `external-researcher` |
 | Multi-source synthesis with trend identification | `research-synthesizer` (only when the user explicitly asks for synthesis, not single-fact lookup) |
+| Surfacing uncaptured wins, recognition, competency demonstrations | `brag-spotter` (used by `/om-weekly`, `/om-wrap-up`) |
+| Structural placement of a new concept/project — which MOC, which dashboard, which backlinks | `knowledge-architect` |
+| Checking freshly-created or modified notes against `.claude/rules/` | `quality-reviewer` (used by `/om-wrap-up`; reports, does not auto-fix) |
 
 If two agents seem to fit, pick the narrower one and explain the choice in one line.
 
@@ -368,6 +412,19 @@ A dashboard is "done" when:
 2. Invoke the `session-documenter` agent.
 3. Save with `type: session` under `work/sessions/`, link related artifacts via `related`.
 
+### 7. User wants to edit the talk
+
+1. Treat `talk/AI-Agent Delivery Workflow.md` as the master script. `Sources/Web/ai_agent_delivery_talk_full.md` is the older draft — read for reference, do not edit in parallel.
+2. Companion docs (`Live Demo Script.md`, `Speaker Notes.md`, `Pre-Show Checklist.md`, `Fallback Demo Script.md`, `Real Stories.md`, `Templates.md`, `Cannot Show.md`, `Call To Action.md`) are operational artifacts. Edits should keep their cross-references (`related:` in frontmatter) consistent.
+3. Russian content. Do not "improve" prose stylistically without an explicit request — voice is deliberate (see `/om-humanize`).
+4. Timing budgets in `Live Demo Script.md` (per-step minutes) are load-bearing — flag any edit that changes total to ≠ 20:00 demo / 60:00 talk.
+
+### 8. User wants to do something with `packagesearch/`
+
+1. This is real Java code, not vault material. Use standard code tools (`Read`, `Edit`, `Grep`, `Bash` with `mvn`).
+2. Do not add YAML frontmatter. Do not run `note-normalizer` or any `obsidian-*` skill against this directory.
+3. Before running `mvn test` live or as a check, verify the target test class is unit-only — see "Live demo target" section.
+
 ---
 
 ## Where things live
@@ -381,6 +438,7 @@ A dashboard is "done" when:
 - Rules (canonical policy): `.claude/rules/`.
 - Bases dashboards: `bases/` (not yet present on disk).
 - Templates: `templates/` (not yet present on disk).
-- Memory (Claude Code): managed via the auto-memory system at `~/.claude/projects/D--projects-ALFA-doklad/memory/`, not as vault notes.
+- Memory (Claude Code): managed via the auto-memory system at `C:\Users\Egor\.claude\projects\C--Users-Egor-work-doklad\memory\`, not as vault notes.
+- Talk artifacts: `talk/` (master: `talk/AI-Agent Delivery Workflow.md`). Research feeding the talk: `Sources/Web/`. Demo target codebase: `Sources/programm/packagesearch/`.
 
 When in doubt: search first, ask second, write last.

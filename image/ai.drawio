@@ -1,0 +1,222 @@
+<mxfile host="app.diagrams.net" agent="ChatGPT">
+  <diagram name="AI embedded in sprint process" id="ai-embedded-sprint-process">
+    <mxGraphModel dx="2445" dy="948" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2200" pageHeight="1300" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=22;fontStyle=1;" value="AI как встроенный слой помощи в процессе спринта" vertex="1">
+          <mxGeometry height="38" width="1500" x="220" y="18" as="geometry" />
+        </mxCell>
+        <mxCell id="roll_sec" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=none;fontSize=13;fontStyle=1;align=left;verticalAlign=middle;" value="Внедрения" vertex="1">
+          <mxGeometry height="24" width="220" x="40" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="r1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8F8F8;strokeColor=#A6A6A6;fontSize=11;fontStyle=1;arcSize=10;spacing=6;" value="1. Пилот&lt;br&gt;2–3 задачи" vertex="1">
+          <mxGeometry height="62" width="160" x="70" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="r2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8F8F8;strokeColor=#A6A6A6;fontSize=11;fontStyle=1;arcSize=10;spacing=6;" value="2. Минимум&lt;br&gt;документация" vertex="1">
+          <mxGeometry height="62" width="240" x="260" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="r3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8F8F8;strokeColor=#A6A6A6;fontSize=11;fontStyle=1;arcSize=10;spacing=6;" value="3. Масштабирование&lt;br&gt;на команду" vertex="1">
+          <mxGeometry height="62" width="190" x="530" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="r4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8F8F8;strokeColor=#A6A6A6;fontSize=11;fontStyle=1;arcSize=10;spacing=6;" value="4. Review эффекта&lt;br&gt;раз в неделю" vertex="1">
+          <mxGeometry height="62" width="190" x="750" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="r5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8F8F8;strokeColor=#A6A6A6;fontSize=11;fontStyle=1;arcSize=10;spacing=6;" value="5. Доработка документации" vertex="1">
+          <mxGeometry height="62" width="190" x="970" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="re0" edge="1" parent="1" source="r1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.5;strokeColor=#222222;fontSize=10;" target="r2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="re1" edge="1" parent="1" source="r2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.5;strokeColor=#222222;fontSize=10;" target="r3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="re2" edge="1" parent="1" source="r3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.5;strokeColor=#222222;fontSize=10;" target="r4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="re3" edge="1" parent="1" source="r4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.5;strokeColor=#222222;fontSize=10;" target="r5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_main" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8F8F8;strokeColor=#999999;fontSize=11;fontStyle=1;arcSize=10;spacing=8;" value="Основное действие / результат" vertex="1">
+          <mxGeometry height="26" width="200" x="1260" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_ai" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE5CD;strokeColor=#D79B00;fontSize=10;fontStyle=1;arcSize=10;spacing=8;align=left;" value="AI помогает внутри фазы" vertex="1">
+          <mxGeometry height="20" width="200" x="1260" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_human" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;fontSize=10;arcSize=10;spacing=8;align=left;" value="Human checkpoint" vertex="1">
+          <mxGeometry height="20" width="200" x="1260" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_out" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=10;fontStyle=1;arcSize=10;spacing=8;" value="Выход фазы" vertex="1">
+          <mxGeometry height="20" width="200" x="1260" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#BFBFBF;fontSize=12;arcSize=10;spacing=6;" value="" vertex="1">
+          <mxGeometry height="600" width="290" x="50" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#D0D0D0;fontSize=12;fontStyle=1;align=center;verticalAlign=middle;" value="1. Подготовка" vertex="1">
+          <mxGeometry height="34" width="290" x="50" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_main" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8F8F8;strokeColor=#999999;fontSize=11;fontStyle=1;arcSize=10;spacing=8;" value="Аналитик собирает&lt;br&gt;контекст, материалы,&lt;br&gt;ограничения" vertex="1">
+          <mxGeometry height="82" width="250" x="70" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_ai" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE5CD;strokeColor=#D79B00;fontSize=10;fontStyle=1;arcSize=10;spacing=8;align=left;" value="AI помогает:&lt;br&gt;• написание сценарии&lt;br&gt;• черновик аналитики" vertex="1">
+          <mxGeometry height="130" width="250" x="70" y="435" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_human" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;fontSize=10;arcSize=10;spacing=8;align=left;" value="Проверяет аналитик:&lt;br&gt;требования, AC,&lt;br&gt;открытые вопросы" vertex="1">
+          <mxGeometry height="88" width="250" x="70" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_out" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=10;fontStyle=1;arcSize=10;spacing=8;" value="AI-ready постановка" vertex="1">
+          <mxGeometry height="64" width="250" x="70" y="725" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_e1" edge="1" parent="1" source="p1_main" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.0;strokeColor=#999999;fontSize=10;" target="p1_ai" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_e2" edge="1" parent="1" source="p1_ai" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.0;strokeColor=#999999;fontSize=10;" target="p1_human" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_e3" edge="1" parent="1" source="p1_human" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.0;strokeColor=#999999;fontSize=10;" target="p1_out" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p2_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#BFBFBF;fontSize=12;arcSize=10;spacing=6;" value="" vertex="1">
+          <mxGeometry height="600" width="290" x="365" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="p2_hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#D0D0D0;fontSize=12;fontStyle=1;align=center;verticalAlign=middle;" value="2. Планирование" vertex="1">
+          <mxGeometry height="34" width="290" x="365" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="p2_main" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8F8F8;strokeColor=#999999;fontSize=11;fontStyle=1;arcSize=10;spacing=8;" value="Команда проводит&lt;br&gt;refinement,&lt;br&gt;уточняет объем,&lt;br&gt;готовит оценку" vertex="1">
+          <mxGeometry height="82" width="250" x="385" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="p2_ai" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE5CD;strokeColor=#D79B00;fontSize=10;fontStyle=1;arcSize=10;spacing=8;align=left;" value="AI помогает:&lt;br&gt;• черновая декомпозиция" vertex="1">
+          <mxGeometry height="130" width="250" x="385" y="435" as="geometry" />
+        </mxCell>
+        <mxCell id="p2_human" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;fontSize=10;arcSize=10;spacing=8;align=left;" value="Проверяет команда:&lt;br&gt;оценка, DoR" vertex="1">
+          <mxGeometry height="88" width="250" x="385" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="p2_out" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=10;fontStyle=1;arcSize=10;spacing=8;" value="Ready for Sprint" vertex="1">
+          <mxGeometry height="64" width="250" x="385" y="725" as="geometry" />
+        </mxCell>
+        <mxCell id="p2_e1" edge="1" parent="1" source="p2_main" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.0;strokeColor=#999999;fontSize=10;" target="p2_ai" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p2_e2" edge="1" parent="1" source="p2_ai" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.0;strokeColor=#999999;fontSize=10;" target="p2_human" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p2_e3" edge="1" parent="1" source="p2_human" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.0;strokeColor=#999999;fontSize=10;" target="p2_out" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p3_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#BFBFBF;fontSize=12;arcSize=10;spacing=6;" value="" vertex="1">
+          <mxGeometry height="600" width="290" x="680" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="p3_hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#D0D0D0;fontSize=12;fontStyle=1;align=center;verticalAlign=middle;" value="3. Реализация" vertex="1">
+          <mxGeometry height="34" width="290" x="680" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="p3_main" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8F8F8;strokeColor=#999999;fontSize=11;fontStyle=1;arcSize=10;spacing=8;" value="Разработчик реализует,&lt;br&gt;аналитик сопровождает,&lt;br&gt;QA готовится заранее" vertex="1">
+          <mxGeometry height="82" width="250" x="700" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="p3_ai" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE5CD;strokeColor=#D79B00;fontSize=10;fontStyle=1;arcSize=10;spacing=8;align=left;" value="AI помогает:&lt;br&gt;• создание прототипа&lt;br&gt;• шаблонный код&lt;br&gt;• unit / integration tests&lt;br&gt;• автотесты&lt;br&gt;• docs" vertex="1">
+          <mxGeometry height="130" width="250" x="700" y="435" as="geometry" />
+        </mxCell>
+        <mxCell id="p3_human" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;fontSize=10;arcSize=10;spacing=8;align=left;" value="Проверяет разработчик и автотестер каждый по своей части:&lt;br&gt;понимание кода, тесты, риски" vertex="1">
+          <mxGeometry height="88" width="250" x="700" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="p3_out" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=10;fontStyle=1;arcSize=10;spacing=8;" value="Review-ready MR" vertex="1">
+          <mxGeometry height="64" width="250" x="700" y="725" as="geometry" />
+        </mxCell>
+        <mxCell id="p3_e1" edge="1" parent="1" source="p3_main" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.0;strokeColor=#999999;fontSize=10;" target="p3_ai" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p3_e2" edge="1" parent="1" source="p3_ai" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.0;strokeColor=#999999;fontSize=10;" target="p3_human" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p3_e3" edge="1" parent="1" source="p3_human" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.0;strokeColor=#999999;fontSize=10;" target="p3_out" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p4_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#BFBFBF;fontSize=12;arcSize=10;spacing=6;" value="" vertex="1">
+          <mxGeometry height="600" width="290" x="995" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="p4_hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#D0D0D0;fontSize=12;fontStyle=1;align=center;verticalAlign=middle;" value="4. Review / Testing" vertex="1">
+          <mxGeometry height="34" width="290" x="995" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="p4_main" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8F8F8;strokeColor=#999999;fontSize=11;fontStyle=1;arcSize=10;spacing=8;" value="MR проходит review,&lt;br&gt;QA тестирует,&lt;br&gt;аналитик подтверждает&lt;br&gt;функциональность" vertex="1">
+          <mxGeometry height="82" width="250" x="1015" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="p4_ai" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE5CD;strokeColor=#D79B00;fontSize=10;fontStyle=1;arcSize=10;spacing=8;align=left;" value="AI помогает:&lt;br&gt;• self-review по АС&lt;br&gt;• тестовые сценарии&lt;br&gt;• разбор дефектов" vertex="1">
+          <mxGeometry height="130" width="250" x="1015" y="435" as="geometry" />
+        </mxCell>
+        <mxCell id="p4_human" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;fontSize=10;arcSize=10;spacing=8;align=left;" value="Проверяют люди:&lt;br&gt;reviewer, QA,&lt;br&gt;аналитик" vertex="1">
+          <mxGeometry height="88" width="250" x="1015" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="p4_out" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=10;fontStyle=1;arcSize=10;spacing=8;" value="Accepted increment" vertex="1">
+          <mxGeometry height="64" width="250" x="1015" y="725" as="geometry" />
+        </mxCell>
+        <mxCell id="p4_e1" edge="1" parent="1" source="p4_main" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.0;strokeColor=#999999;fontSize=10;" target="p4_ai" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p4_e2" edge="1" parent="1" source="p4_ai" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.0;strokeColor=#999999;fontSize=10;" target="p4_human" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p4_e3" edge="1" parent="1" source="p4_human" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.0;strokeColor=#999999;fontSize=10;" target="p4_out" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p5_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#BFBFBF;fontSize=12;arcSize=10;spacing=6;" value="" vertex="1">
+          <mxGeometry height="600" width="290" x="1310" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="p5_hdr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#D0D0D0;fontSize=12;fontStyle=1;align=center;verticalAlign=middle;" value="5. Улучшение" vertex="1">
+          <mxGeometry height="34" width="290" x="1310" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="p5_main" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8F8F8;strokeColor=#999999;fontSize=11;fontStyle=1;arcSize=10;spacing=8;" value="Команда закрывает&lt;br&gt;задачу и разбирает,&lt;br&gt;что ускорило работу" vertex="1">
+          <mxGeometry height="82" width="250" x="1330" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="p5_ai" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;fontStyle=1;arcSize=10;spacing=8;align=left;" value="улучшаем работу с AI:&lt;br&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;• п&lt;/span&gt;олезные промты&lt;/div&gt;&lt;div&gt;• сбор AI эффекта&lt;/div&gt;&lt;div&gt;• обновление документации&lt;/div&gt;" vertex="1">
+          <mxGeometry height="130" width="250" x="1330" y="435" as="geometry" />
+        </mxCell>
+        <mxCell id="p5_human" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;fontSize=10;arcSize=10;spacing=8;align=left;" value="Проверяет техлид:&lt;br&gt;что масштабировать,&lt;br&gt;что убрать" vertex="1">
+          <mxGeometry height="88" width="250" x="1330" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="p5_out" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=10;fontStyle=1;arcSize=10;spacing=8;" value="Обновленная документация" vertex="1">
+          <mxGeometry height="64" width="250" x="1330" y="725" as="geometry" />
+        </mxCell>
+        <mxCell id="p5_e1" edge="1" parent="1" source="p5_main" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.0;strokeColor=#999999;fontSize=10;" target="p5_ai" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p5_e2" edge="1" parent="1" source="p5_ai" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.0;strokeColor=#999999;fontSize=10;" target="p5_human" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p5_e3" edge="1" parent="1" source="p5_human" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.0;strokeColor=#999999;fontSize=10;" target="p5_out" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="phase_flow_0" edge="1" parent="1" source="p1_out" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.5;strokeColor=#222222;fontSize=10;" target="p2_main" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="350" y="757" />
+              <mxPoint x="350" y="371" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="phase_flow_1" edge="1" parent="1" source="p2_out" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.5;strokeColor=#222222;fontSize=10;" target="p3_main" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="670" y="757" />
+              <mxPoint x="670" y="371" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="phase_flow_2" edge="1" parent="1" source="p3_out" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.5;strokeColor=#222222;fontSize=10;" target="p4_main" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="990" y="757" />
+              <mxPoint x="990" y="371" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="phase_flow_3" edge="1" parent="1" source="p4_out" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=1.5;strokeColor=#222222;fontSize=10;" target="p5_main" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1300" y="757" />
+              <mxPoint x="1300" y="371" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
