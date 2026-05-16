@@ -34,22 +34,26 @@ tags:
 
 ### Список артефактов
 
-| # | Файл | Тип | Что показывает |
+Шаги demo переехали: 1–5 теперь analyst-track (без code), 6–12 — dev-track. Filenames в `fallback/` остались **исторические** (порядок исходного черновика), порядок использования в demo — по колонке «Новый # шага».
+
+| Новый # шага | Файл | Тип | Что показывает |
 |---|---|---|---|
-| 1 | `fallback/01-trigger.png` | screenshot | Тот же `demo/ticket.md` в IDE |
-| 2 | `fallback/02-understanding.png` | screenshot | opencode-вывод: распакованное требование + 4 открытых вопроса |
-| 3 | `fallback/03-impact-map.png` | screenshot | opencode-вывод: 7–9 точек impact area с file:line |
-| 4 | `fallback/04-current-sequence.png` | rendered Mermaid (PNG) | Текущий sequence, 6 участников |
-| 5 | `fallback/05-questions.png` | screenshot | Список вопросов, выделен "missed question" |
-| 6 | `fallback/06-refined-fs.png` | screenshot | Обновлённые AC + edge cases |
-| 7 | `fallback/07-new-sequence.png` | rendered Mermaid (PNG) | Sequence с alt-веткой для null |
-| 8 | `fallback/08-impl-plan.png` | screenshot | План реализации, 5–7 шагов |
-| 9 | `fallback/09-diff.png` | screenshot | Чистый diff в трёх файлах < 30 строк |
-| 10 | `fallback/10-tests.png` | screenshot | Два теста + команда mvn |
-| 11 | `fallback/11-self-review.png` | screenshot | Self-review с найденным NPE-риском |
-| 12 | `fallback/12-mr-description.md` | text | Готовый MR description |
+| 1 | `fallback/01-trigger.png` | screenshot | Бизнес-тикет PKG-2026-104 в IDE (формулировка без code refs) |
+| 2 | `fallback/02-understanding.png` | screenshot | opencode-вывод: декомпозиция аналитиком + 4 открытых бизнес-вопроса (без имён классов) |
+| 3 | `fallback/05-questions.png` | screenshot | Список бизнес-вопросов, выделен "missed question" (что показывать при истёкшем grace) |
+| 4 | `fallback/06-refined-fs.png` | screenshot | Обновлённые AC в бизнес-терминах + явные edge cases |
+| 5 | `fallback/07-new-sequence.png` | rendered Mermaid (PNG) | **Business TO-BE**: Пользователь / Клиент / API с тремя ветками. ⚠ **Требует пересъёма** под новый business-level вариант (был технический sequence с Ctrl/Svc) |
+| 6 | `fallback/03-impact-map.png` | screenshot | dev-вывод: 7–9 точек impact area с file:line, найдено через MCP |
+| 7 | `fallback/04-current-sequence.png` | rendered Mermaid (PNG) | Технический AS-IS sequence из живого кода, 6 участников |
+| 8 | `fallback/08-impl-plan.png` | screenshot | План реализации, 4 пункта, без рефакторинга соседей |
+| 9 | `fallback/09-diff.png` | screenshot | Чистый diff в двух файлах < 30 строк |
+| 10 | `fallback/10-tests.png` | screenshot | 4 теста + зелёный mvn |
+| 11 | `fallback/11-self-review.png` | screenshot | Self-review с найденным truncation-bug (ChronoUnit.DAYS на ZonedDateTime) |
+| 12 | `fallback/12-mr-description.md` | text | Готовый MR description со всеми секциями шаблона |
 
 > Дополнительно: `fallback/cheat-sheet.md` — однострочные эталоны по каждому шагу (что должно быть на экране в идеале).
+
+> ⚠ **Pre-show action item:** `fallback/07-new-sequence.png` в текущей версии содержит технический Mermaid (с участниками `Ctrl`, `Svc`, `QB`) — это годится для **шага 7** (AS-IS), но не для **шага 5** (Business TO-BE). Под новый шаг 5 нужен business-level пересъём: участники Пользователь / Клиент / API без серверных компонентов. Либо переименовать существующий файл и снять новый, либо хранить оба под разными именами (`fallback/05a-business-tobe.png` для шага 5 и оставить `07-new-sequence.png` для шага 7).
 
 ---
 
@@ -58,38 +62,38 @@ tags:
 ### Шаг 1 — Trigger
 **Поломка:** не открывается `demo/ticket.md` в IDE.
 **Fallback:** показать `fallback/01-trigger.png` в браузере или Preview.
-**Speaker pivot:** "Тикет на экране. Идём дальше."
+**Speaker pivot:** "Бизнес-тикет на экране. Идём дальше."
 
-### Шаг 2 — Understanding
-**Поломка:** opencode не отвечает / даёт пустой ответ / пишет код вопреки инструкции.
+### Шаг 2 — Understanding *(аналитик, без code)*
+**Поломка:** opencode не отвечает / даёт пустой ответ / пишет код вопреки инструкции / упоминает технические имена.
 **Fallback:** `fallback/02-understanding.png`. Показать зрителям и зачитать пункты вслух.
-**Speaker pivot (если агент написал код):** "Видите — он начал писать код, хотя я попросил не писать. Это и есть пример того, почему мы проверяем формат ответа, а не доверяем. Давайте я покажу правильный результат, который я получил вчера на dry-run."
+**Speaker pivot (если агент написал код):** "Видите — он начал писать код или упомянул имя класса, хотя я попросил не делать ни того ни другого. Это и есть пример того, почему мы аналитику отдельный контекст создаём, без MCP к коду. Давайте я покажу правильный результат с dry-run."
 
-### Шаг 3 — Impact area (WOW #1)
+### Шаг 3 — Questions to business (WOW #3) *(аналитик)*
+**Поломка:** все вопросы общие, "missed question" про истёкший grace не появился.
+**Fallback:** `fallback/05-questions.png`. Подсветить третий вопрос пальцем / курсором.
+**Speaker pivot:** "Вот подготовленный набор вопросов, в нём важно вот это — что показывать, если grace уже истёк. Этот вопрос мог пропустить и я, и аналитик, и продукт."
+
+### Шаг 4 — Refined FS *(аналитик)*
+**Поломка:** агент не учёл ответы бизнеса / просочились технические термины.
+**Fallback:** `fallback/06-refined-fs.png`.
+**Speaker pivot:** "Вот ФС после ответов от продукта. Видите — добавились явные edge cases: активный, истёкший, нет данных, граница 'сегодня'. Этот цикл с агентом занимает минуты, не дни."
+
+### Шаг 5 — Business TO-BE handoff *(аналитик)*
+**Поломка:** Mermaid некорректен или просочились серверные участники (`Ctrl`, `Svc`).
+**Fallback:** `fallback/07-new-sequence.png` (в pre-show заменён на business-level вариант — см. action item выше).
+**Speaker pivot:** "Бизнес-диаграмма handoff'а. Три участника — Пользователь, Клиент, API. Никаких внутренних компонентов сервера — этого аналитик не знает. Это handoff-артефакт для разработчика, QA, продукта."
+
+### Шаг 6 — Impact area + MCP (WOW #1) *(dev)*
 **Поломка:** агент находит < 3 файлов / галлюцинирует / MCP не отвечает.
 **Fallback:** `fallback/03-impact-map.png`.
-**Speaker pivot:** "Вот эта карта — то, что я получаю на 90 секунд. Семь точек impact area, проверенные file:line. Сравните с 20 минутами grep'а вручную — это и есть тот WOW-момент, который я обещал."
+**Speaker pivot:** "Вот эта карта — то, что dev получает на 90 секунд. Семь точек impact area, проверенные file:line. Сравните с 20 минутами grep'а вручную — это и есть тот WOW-момент, который я обещал."
 > Даже на fallback не теряем тематического impact'а — обозначаем рост в 15× словами.
 
-### Шаг 4 — Current sequence (WOW #2)
+### Шаг 7 — AS-IS Mermaid из кода (WOW #2) *(dev)*
 **Поломка:** Mermaid не рендерится / неверный синтаксис / отсутствует.
-**Fallback:** `fallback/04-current-sequence.png` (отрендеренный заранее).
-**Speaker pivot:** "Эта диаграмма из живого кода. Не из ФС. Если что-то на ней не так — это про код."
-
-### Шаг 5 — Questions (WOW #3)
-**Поломка:** все вопросы общие, "missed question" не появился.
-**Fallback:** `fallback/05-questions.png`. Подсветить третий вопрос пальцем / курсором.
-**Speaker pivot:** "Вот подготовленный набор вопросов, в нём важно вот это — про null. Этот вопрос мог пропустить и я, и аналитик."
-
-### Шаг 6 — Refine ФС
-**Поломка:** агент не учёл ответы аналитика / не обновил AC.
-**Fallback:** `fallback/06-refined-fs.png`.
-**Speaker pivot:** "Вот ФС после ответов от бизнеса. Видите — добавились edge cases про null, race condition. Этот цикл с агентом занимает минуты, не дни."
-
-### Шаг 7 — New sequence
-**Поломка:** Mermaid некорректен.
-**Fallback:** `fallback/07-new-sequence.png`.
-**Speaker pivot:** "Та же диаграмма с новой логикой. Это handoff-артефакт для разработчика и для QA."
+**Fallback:** `fallback/04-current-sequence.png` (отрендеренный заранее, технический уровень с `Ctrl`, `Svc`, `QB`).
+**Speaker pivot:** "Эта техническая диаграмма из живого кода. Сравните с business TO-BE шага 5 — там было три участника, здесь пять. Две разные границы абстракции, обе нужны."
 
 ### Шаг 8 — Implementation plan
 **Поломка:** агент игнорирует "не пиши код" и сразу пишет / план фрагментарный.

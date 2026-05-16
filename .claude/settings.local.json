@@ -57,7 +57,18 @@
       "Bash(python -c \"import markdown; print\\(markdown.__version__\\)\")",
       "Bash(python -c \"import markdown_it; print\\('markdown_it OK'\\)\")",
       "Bash(pip install *)",
-      "Bash(python .tmp_md_to_html.py)"
+      "Bash(python .tmp_md_to_html.py)",
+      "WebFetch(domain:agents.md)",
+      "Bash(mkdir -p C:/Users/U_M2P87/Documents/obsidians_project/analitica/.opencode/skills)",
+      "Bash([ -d \"$SRC/$s\" ])",
+      "Bash([ -d \"$DST/$s\" ])",
+      "Bash(cp -r C:/Users/U_M2P87/IdeaProjects/AI/taksa-vibe-ai/analysts/.opencode/skills/__TRACKED_VAR__ C:/Users/U_M2P87/Documents/obsidians_project/analitica/.opencode/skills/__TRACKED_VAR__)",
+      "Bash(node *)",
+      "Bash([ -f \"$DST/skills/$s/SKILL.md\" ])",
+      "Read(//c/Users/U_M2P87/AppData/Roaming/npm/**)",
+      "Bash(python -m json.tool \"C:/Users/U_M2P87/Documents/obsidians_project/analitica/.opencode/opencode.json\")",
+      "Bash(python *)",
+      "Bash(python3 *)"
     ],
     "deny": [
       "Bash(cmd.exe *)",

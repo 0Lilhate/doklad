@@ -14,7 +14,7 @@
               "type": "markdown",
               "state": {
                 "file": "talk/AI-Agent Delivery Workflow.md",
-                "mode": "preview",
+                "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
@@ -78,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 232.5
+    "width": 287.5
   },
   "right": {
     "id": "58726210c68e8330",
@@ -117,7 +117,7 @@
                   "repelStrength": 10,
                   "linkStrength": 1,
                   "linkDistance": 250,
-                  "scale": 1.4019828977761057,
+                  "scale": 1.000000000000003,
                   "close": false
                 }
               },
@@ -206,7 +206,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 753.5
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -222,33 +223,41 @@
   },
   "active": "db85453db51ad8be",
   "lastOpenFiles": [
-    "talk/Live Demo Script.md.tmp.4440.a7b358eec128",
-    "Sources/programm/packagesearch/manifest.yaml.tmpl",
-    "Sources/programm/packagesearch/values.yaml",
-    "Sources/programm/packagesearch/Dockerfile",
-    "Sources/programm/packagesearch/Dockeralfa",
-    "Sources/programm/packagesearch/README.md",
-    "Sources/programm/packagesearch/pom.xml",
-    "Sources/programm/packagesearch/target/generated-sources/annotations",
-    "Sources/programm/packagesearch/target/generated-sources",
-    "Sources/programm/packagesearch/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst",
-    "Sources/programm/packagesearch/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst",
-    "Sources/programm/packagesearch/target/maven-status/maven-compiler-plugin/compile/default-compile",
-    "talk/ai_agent_patterns_section_reworked.md",
-    "talk/Speaker Notes.md",
-    "talk/AI-Agent Delivery Workflow.md",
-    "talk/Real Stories.md",
-    "talk/Call To Action.md",
-    "Sources/Web/Developer Workflow.md",
-    "Sources/Web/AI Agents.md",
-    "Sources/Web/Analyst Workflow.md",
-    "talk/Cannot Show.md",
-    "talk/Templates.md",
+    "talk/demo-artefacts/dev/RUNBOOK-TKSC-001-dev.md",
+    "talk/demo-artefacts/RUNBOOK-TKSC-001-dev.md",
+    "talk/demo-artefacts/analyst/RUNBOOK-TKSC-001.md",
+    "talk/demo-artefacts/RUNBOOK-TKSC-001.md",
+    "talk/demo-artefacts/dev/RUNBOOK-TKSC-001-dev.md.tmp.20512.8b6ad233e173",
+    "talk/demo-artefacts/dev",
+    "talk/demo-artefacts/analyst/TKSC-001-ticket.md",
+    "talk/demo-artefacts/analyst/TKSC-001-ticket.md.tmp.17148.d09ba3741065",
+    "talk/demo-artefacts/analyst/RUNBOOK-TKSC-001.md.tmp.17148.c071c5054138",
+    "talk/demo-artefacts/analyst/RUNBOOK-TKSC-001.md.tmp.17148.740c6929184d",
+    "talk/demo-artefacts/analyst/RUNBOOK-TKSC-001.md.tmp.17148.010914eb1280",
+    "talk/demo-artefacts/analyst/RUNBOOK-TKSC-001.md.tmp.17148.809cf9cab461",
+    "talk/demo-artefacts/analyst/RUNBOOK-TKSC-001.md.tmp.17148.faf6ff6d7aac",
+    "talk/demo-artefacts/analyst/RUNBOOK-TKSC-001.md.tmp.17148.b2191f76327d",
+    "talk/demo-artefacts/analyst/PKG-2026-104-glossary.md",
+    "packagesearch/manifest.yaml.tmpl",
+    "packagesearch/README.md",
+    "talk/demo-artefacts/analyst/PKG-2026-104-stakeholders.md",
+    "talk/demo-artefacts/analyst/PKG-2026-104-ticket.md",
+    "talk/demo-artefacts/analyst/RUNBOOK.md",
+    "talk/demo-artefacts/analyst/TKSC-001-glossary.md",
+    "talk/demo-artefacts/analyst/TKSC-001-handoff.md",
+    "talk/demo-artefacts/analyst/TKSC-001-questions.md",
+    "talk/demo-artefacts/analyst/TKSC-001-refined-fs.md",
+    "talk/demo-artefacts/analyst/TKSC-001-stakeholders.md",
     "talk/Live Demo Script.md",
-    "talk/Fallback Demo Script.md",
-    "talk/Pre-Show Checklist.md",
-    "Sources/Web/ai_agent_delivery_talk_full.md",
-    "CLAUDE.md",
-    "source/ai_agent_delivery_talk_full.md"
+    "talk/demo-artefacts/architect/ADR-example-breaking-change.md",
+    "talk/demo-artefacts/architect/architect-engagement-note.md",
+    "talk/demo-artefacts/analyst/PKG-2026-104-handoff.md",
+    "talk/demo-artefacts/analyst/PKG-2026-104-refined-fs.md",
+    "talk/demo-artefacts/analyst/PKG-2026-104-questions.md",
+    "talk/demo-artefacts/README.md",
+    "AGENTS_ANALYST.md",
+    "AGENTS.md",
+    "talk/AI-Agent Delivery Workflow.md",
+    "Sources/programm/packagesearch/README.md"
   ]
 }
