@@ -223,6 +223,7 @@
   },
   "active": "db85453db51ad8be",
   "lastOpenFiles": [
+    "talk/AI-Agent Delivery Workflow.md.tmp.46084.64c6f6c61d78",
     "talk/demo-artefacts/dev/RUNBOOK-TKSC-001-dev.md",
     "talk/demo-artefacts/RUNBOOK-TKSC-001-dev.md",
     "talk/demo-artefacts/analyst/RUNBOOK-TKSC-001.md",
@@ -257,7 +258,6 @@
     "talk/demo-artefacts/README.md",
     "AGENTS_ANALYST.md",
     "AGENTS.md",
-    "talk/AI-Agent Delivery Workflow.md",
-    "Sources/programm/packagesearch/README.md"
+    "talk/AI-Agent Delivery Workflow.md"
   ]
 }

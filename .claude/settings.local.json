@@ -68,7 +68,9 @@
       "Read(//c/Users/U_M2P87/AppData/Roaming/npm/**)",
       "Bash(python -m json.tool \"C:/Users/U_M2P87/Documents/obsidians_project/analitica/.opencode/opencode.json\")",
       "Bash(python *)",
-      "Bash(python3 *)"
+      "Bash(python3 *)",
+      "WebFetch(domain:mikhail.io)",
+      "WebFetch(domain:paddo.dev)"
     ],
     "deny": [
       "Bash(cmd.exe *)",
